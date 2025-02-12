@@ -87,10 +87,10 @@ app.get('/api/moments', async (req, res) => {
   });
 
 const port = process.env.PORT || 5000;
-if (process.env.NODE_ENV === "dev") {
+// if (process.env.NODE_ENV === "dev") {
     app.listen(port, () => {
         console.log(`Server is running`);
     });
-}
+// }
 
-export const handler = serverless(app);
+// export const handler = serverless(app);
