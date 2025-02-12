@@ -1,5 +1,5 @@
 import express, { urlencoded } from "express";
-import prisma from "./db";
+import prisma from "./db/index.js";
 import cors from "cors";
 import serverless from "serverless-http";
 
