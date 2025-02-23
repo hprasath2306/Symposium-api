@@ -2,7 +2,7 @@ import express, { urlencoded } from "express";
 import prisma from "./db/index.js";
 import cors from "cors";
 import serverless from "serverless-http";
-import studentRoutes from './routes/students';
+import studentRoutes from './routes/students.js';
 
 const app = express();
 app.use(urlencoded({ extended: false }));
