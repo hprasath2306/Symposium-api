@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "debian-openssl-3.0.x"]
 }
 
@@ -14,16 +14,67 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String
-  name      String
-  year      Int
-  section   String
-  phone     String
-  event     String
+model Student {
+  id            String         @id @default(uuid())
+  name          String
+  regNo         String
+  registrations Registration[]
+  TeamMember    TeamMember[]
+}
+
+model Event {
+  id            String         @id @default(uuid())
+  name          String
+  category      EventCategory
+  type          EventType
+  startDate     DateTime
+  endDate       DateTime
+  isTeamEvent   Boolean
+  maxTeamSize   Int?
+  registrations Registration[]
+  Team          Team[]
+}
+
+enum EventCategory {
+  TECHNICAL
+  NON_TECHNICAL
+}
+
+enum EventType {
+  SINGLE
+  TEAM
+}
+
+model Registration {
+  id        String   @id @default(uuid())
+  studentId String
+  student   Student  @relation(fields: [studentId], references: [id])
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id])
+  teamId    String? // If it's a team event
+  team      Team?    @relation(fields: [teamId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  
+}
+
+model Team {
+  id           String         @id @default(uuid())
+  name         String
+  members      TeamMember[]
+  eventId      String
+  event        Event          @relation(fields: [eventId], references: [id])
+  Registration Registration[]
+
+}
+
+model TeamMember {
+  id        String  @id @default(uuid())
+  teamId    String
+  team      Team    @relation(fields: [teamId], references: [id])
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  @@unique([teamId, studentId])
 }
 
 model Moment {
