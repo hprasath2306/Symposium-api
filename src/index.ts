@@ -4,8 +4,6 @@ import cors from "cors";
 import serverless from "serverless-http";
 import studentRoutes from './routes/students';
 
-
-
 const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(express.json());
@@ -20,10 +18,7 @@ app.get("/api/users", async (req, res) => {
     res.json(users);
 });
 
-
 app.use('/api/students', studentRoutes);
-
-
 
 const port = process.env.PORT || 5000;
 // if (process.env.NODE_ENV === "dev") {
