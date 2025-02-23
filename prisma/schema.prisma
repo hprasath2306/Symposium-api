@@ -25,6 +25,8 @@ model Student {
 model Event {
   id            String         @id @default(uuid())
   name          String
+  description   String
+  venue         String
   category      EventCategory
   type          EventType
   startDate     DateTime
@@ -34,6 +36,7 @@ model Event {
   registrations Registration[]
   Team          Team[]
 }
+
 
 enum EventCategory {
   TECHNICAL
