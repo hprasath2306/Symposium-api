@@ -21,20 +21,48 @@ model Student {
   registrations Registration[]
   TeamMember    TeamMember[]
 }
-
 model Event {
   id            String         @id @default(uuid())
   name          String
   description   String
   venue         String
+  image         String
   category      EventCategory
   type          EventType
+  duration      Int
+  Date          DateTime
   startDate     DateTime
   endDate       DateTime
   isTeamEvent   Boolean
   maxTeamSize   Int?
   registrations Registration[]
-  Team          Team[]
+  teams         Team[]
+  rules         EventRule[]
+  requirements  EventRequirement[]
+  coordinators  EventCoordinator[]
+}
+
+model EventRule {
+  id      String @id @default(uuid())
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  rule    String
+}
+
+model EventRequirement {
+  id          String @id @default(uuid())
+  eventId     String
+  event       Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  requirement String
+}
+
+model EventCoordinator {
+  id        String @id @default(uuid())
+  eventId   String
+  event     Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name      String
+  role      String?
+  phone     String
 }
 
 
