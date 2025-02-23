@@ -4,6 +4,7 @@ import cors from "cors";
 import studentRoutes from './routes/students.js';
 import momentRoutes from './routes/moment.js';
 import eventRoutes from './routes/events.js';
+import registerRoutes from './routes/registration.js';
 const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(express.json());
@@ -17,8 +18,9 @@ app.get("/api/users", async (req, res) => {
 });
 app.use('/api/students', studentRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/registrations', registerRoutes);
 app.use('/api', momentRoutes);
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 // if (process.env.NODE_ENV === "dev") {
 app.listen(port, () => {
     console.log(`Server is running`);

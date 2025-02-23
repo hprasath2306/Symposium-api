@@ -5,6 +5,7 @@ import serverless from "serverless-http";
 import studentRoutes from './routes/students';
 import momentRoutes from './routes/moment';
 import eventRoutes from './routes/events';
+import registerRoutes from './routes/registration';
 
 const app = express();
 app.use(urlencoded({ extended: false }));
@@ -22,10 +23,11 @@ app.get("/api/users", async (req, res) => {
 
 app.use('/api/students', studentRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/registrations', registerRoutes);
 app.use('/api', momentRoutes)
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 // if (process.env.NODE_ENV === "dev") {
     app.listen(port, () => {
         console.log(`Server is running`);

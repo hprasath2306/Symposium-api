@@ -60,6 +60,7 @@ router.get('/:id', async (req, res) => {
 // }
 router.post('/', async (req, res) => {
     const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
+    // console.log(rules, requirements, coordinators);
     try {
         const event = await prisma.event.create({
             data: {
@@ -89,6 +90,7 @@ router.post('/', async (req, res) => {
         res.json(event);
     }
     catch (error) {
+        console.error('Error creating event:', error);
         res.status(500).json({ error: 'Failed to create event' });
     }
 });

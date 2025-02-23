@@ -50,6 +50,8 @@ router.post('/bulk', async (req, res) => {
 
 
 
+
+
 router.get('/', async (req, res) => {
   try {
     const students = await prisma.student.findMany({
