@@ -6,7 +6,7 @@ const router = Router();
 const prisma = new PrismaClient();
 
 
-router.post("/api/moments", async (req, res) => {
+router.post("/moments", async (req, res) => {
   try{
       const imageUrl = req.body.imageUrl;
       console.log(imageUrl)
@@ -22,7 +22,7 @@ router.post("/api/moments", async (req, res) => {
   }
 })
 
-router.get('/api/moments', async (req, res) => {
+router.get('/moments', async (req, res) => {
   try {
     const moments = await prisma.moment.findMany({
       orderBy: {

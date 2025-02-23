@@ -20,7 +20,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.use('/api/students', studentRoutes);
-app.use('/api/moments', momentRoutes)
+app.use('/api', momentRoutes)
 
 const port = process.env.PORT || 5000;
 // if (process.env.NODE_ENV === "dev") {
