@@ -3,6 +3,7 @@ import prisma from "./db/index.js";
 import cors from "cors";
 import serverless from "serverless-http";
 import studentRoutes from './routes/students.js';
+import momentRoutes from './routes/moment.js';
 
 const app = express();
 app.use(urlencoded({ extended: false }));
@@ -19,6 +20,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.use('/api/students', studentRoutes);
+app.use('/api/moments', momentRoutes)
 
 const port = process.env.PORT || 5000;
 // if (process.env.NODE_ENV === "dev") {

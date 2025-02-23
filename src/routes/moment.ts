@@ -1,9 +1,5 @@
-
-
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
-
-
 
 
 const router = Router();
@@ -38,3 +34,5 @@ router.get('/api/moments', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch moments' });
   }
 });
+
+export default router;
