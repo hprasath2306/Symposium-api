@@ -1,10 +1,10 @@
 import express, { urlencoded } from "express";
 import prisma from "./db/index.js";
 import cors from "cors";
-import studentRoutes from './routes/students/.js';
-import momentRoutes from './routes/moment/.js';
-import eventRoutes from './routes/events/.js';
-import registerRoutes from './routes/registration/.js';
+import studentRoutes from './routes/students.js';
+import momentRoutes from './routes/moment.js';
+import eventRoutes from './routes/events.js';
+import registerRoutes from './routes/registration.js';
 const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(express.json());
