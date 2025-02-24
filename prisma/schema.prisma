@@ -78,8 +78,8 @@ enum EventType {
 
 model Registration {
   id        String   @id @default(uuid())
-  studentId String
-  student   Student  @relation(fields: [studentId], references: [id])
+  studentId String?
+  student   Student?  @relation(fields: [studentId], references: [id])
   eventId   String
   event     Event    @relation(fields: [eventId], references: [id])
   teamId    String? // If it's a team event
@@ -97,6 +97,7 @@ model Team {
   Registration Registration[]
 
 }
+
 
 model TeamMember {
   id        String  @id @default(uuid())
