@@ -43,17 +43,24 @@ router.post('/single', async (req, res) => {
   try {
 
     const event = await prisma.event.findUnique({ where: { id: eventId } });
-    if (!event)  res.status(404).json({ error: 'Event not found' });
-
-    if (event?.isTeamEvent) {
-       res.status(400).json({ error: 'This event requires a team registration' });
+    if (!event) {
+      res.status(404).json({ error: 'Event not found' })
+      return;
     }
+      ;
+   
+    if (event?.isTeamEvent) {
+      res.status(400).json({ error: 'This event requires a team registration' });
+      return;
+    }
+
 
     // Check for time conflict
     if (await hasTimeConflict(studentId, eventId)) {
-       res.status(400).json({ error: 'Time conflict with another event' });
+      res.status(400).json({ error: 'Time conflict with another event' });
+      return;
     }
-
+      
     const registration = await prisma.registration.create({
       data: { studentId, eventId },
     });
@@ -75,16 +82,21 @@ router.post('/team', async (req, res) => {
     const event = await prisma.event.findUnique({
       where: { id: eventId },
     });
-    if (!event)  res.status(404).json({ error: 'Event not found' });
+    if (!event) {
+      res.status(404).json({ error: 'Event not found' });
+      return;
+    } 
 
     // Ensure event is a team event
     if (!event?.isTeamEvent) {
-       res.status(400).json({ error: 'This event is for individual participation only' });
+      res.status(400).json({ error: 'This event is for individual participation only' });
+      return; 
     }
 
     // Check if the team size is valid
     if (event?.maxTeamSize && memberIds.length > event.maxTeamSize) {
-       res.status(400).json({ error: `Team size exceeds maximum allowed: ${event.maxTeamSize}` });
+      res.status(400).json({ error: `Team size exceeds maximum allowed: ${event.maxTeamSize}` });
+      return;
     }
 
     // Check if any team member is already registered in another event on the same day
@@ -110,7 +122,8 @@ router.post('/team', async (req, res) => {
       if (existingRegistration) {
          res.status(400).json({
           error: `Student ${studentId} is already registered for an event on this day`,
-        });
+         });
+          return;           
       }
     } 
 
