@@ -23,7 +23,7 @@ app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registerRoutes);
 app.use('/api/info', infoRoutes);
 app.use('/api/coordinators', coordinateRoutes);
-.jsapp.use('/api', momentRoutes);
+app.use('/api', momentRoutes);
 const port = process.env.PORT || 6000;
 // if (process.env.NODE_ENV === "dev") {
 app.listen(port, () => {
