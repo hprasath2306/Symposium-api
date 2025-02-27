@@ -94,4 +94,58 @@ router.post('/', async (req, res) => {
         res.status(500).json({ error: 'Failed to create event' });
     }
 });
+//Delete an event
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await prisma.event.delete({
+            where: {
+                id: id,
+            },
+        });
+        res.json({ message: 'Event deleted successfully' });
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to delete event' });
+    }
+});
+//Update an event
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
+    try {
+        const event = await prisma.event.update({
+            where: {
+                id: id,
+            },
+            data: {
+                name,
+                description,
+                venue,
+                image,
+                category,
+                type,
+                duration,
+                Date,
+                startDate,
+                endDate,
+                isTeamEvent,
+                maxTeamSize,
+                coordinators: {
+                    update: coordinators,
+                },
+                rules: {
+                    update: rules,
+                },
+                requirements: {
+                    update: requirements,
+                },
+            },
+        });
+        res.json(event);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Failed to update event' });
+    }
+});
 export default router;

@@ -79,21 +79,21 @@ enum EventType {
 model Registration {
   id        String   @id @default(uuid())
   studentId String?
-  student   Student?  @relation(fields: [studentId], references: [id])
+  student   Student?  @relation(fields: [studentId], references: [id], onDelete: Cascade)
   eventId   String
-  event     Event    @relation(fields: [eventId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   teamId    String? // If it's a team event
-  team      Team?    @relation(fields: [teamId], references: [id])
+  team      Team?    @relation(fields: [teamId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   
 }
 
 model Team {
   id           String         @id @default(uuid())
-  name         String
+  name         String @unique
   members      TeamMember[]
   eventId      String
-  event        Event          @relation(fields: [eventId], references: [id])
+  event        Event          @relation(fields: [eventId], references: [id], onDelete: Cascade)
   Registration Registration[]
 
 }
@@ -102,9 +102,9 @@ model Team {
 model TeamMember {
   id        String  @id @default(uuid())
   teamId    String
-  team      Team    @relation(fields: [teamId], references: [id])
+  team      Team    @relation(fields: [teamId], references: [id], onDelete: Cascade)
   studentId String
-  student   Student @relation(fields: [studentId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([teamId, studentId])
 }
