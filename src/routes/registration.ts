@@ -69,9 +69,28 @@ router.post('/single', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to register student' });
   }
-
 }
 );
+
+
+//get route
+
+router.get('/', async (req, res) => {
+  try {
+    const registrations = await prisma.registration.findMany({
+      include: {
+        event: true,
+        student: true,
+        team: true,
+      },
+    });
+    res.json(registrations);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch registrations' });
+  }
+});
+
+
 
 
 router.post('/team', async (req, res) => {

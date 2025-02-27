@@ -109,6 +109,22 @@ model TeamMember {
   @@unique([teamId, studentId])
 }
 
+
+model Info{
+  id        String   @id @default(uuid())
+  name      String
+  year      String
+  whatsapp_link String 
+}
+
+model TeamCorrdinator{
+  id        String   @id @default(uuid())
+  name      String
+  phone     String?
+  role      String
+  imageUrl  String
+}
+
 model Moment {
   id        String   @id @default(cuid())
   imageUrl  String
