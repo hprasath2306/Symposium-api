@@ -104,6 +104,7 @@ router.post('/team', async (req, res) => {
     for (const studentId of memberIds) {
       // Check for time conflict
       //iterate the teamMembers Model and check if the studentId is already registered for an event on the same day
+      console.log(studentId);
       const existingRegistration = await prisma.teamMember.findFirst({
         where: {
           studentId,
