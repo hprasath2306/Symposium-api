@@ -115,9 +115,7 @@ router.put('/:id', async (req, res) => {
     const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
     try {
         const event = await prisma.event.update({
-            where: {
-                id: id,
-            },
+            where: { id },
             data: {
                 name,
                 description,
@@ -131,20 +129,25 @@ router.put('/:id', async (req, res) => {
                 endDate,
                 isTeamEvent,
                 maxTeamSize,
+                // Handle relations properly
                 coordinators: {
-                    update: coordinators,
+                    deleteMany: {}, // Deletes all existing coordinators for the event
+                    create: coordinators, // Recreates new coordinators
                 },
                 rules: {
-                    update: rules,
+                    deleteMany: {},
+                    create: rules,
                 },
                 requirements: {
-                    update: requirements,
+                    deleteMany: {},
+                    create: requirements,
                 },
             },
         });
         res.json(event);
     }
     catch (error) {
+        console.error('Error updating event:', error);
         res.status(500).json({ error: 'Failed to update event' });
     }
 });
