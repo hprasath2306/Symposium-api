@@ -69,7 +69,7 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   
-  const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
+  const { name, description, venue, image, category, type, duration, Date, startDate, endDate, whatsapp_link,isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
   // console.log(rules, requirements, coordinators);
   try {
     const event = await prisma.event.create({
@@ -77,6 +77,7 @@ router.post('/', async (req, res) => {
         name,
         description,
         venue,
+        whatsapp_link,
         image,
         category,
         type,
@@ -124,7 +125,7 @@ router.delete('/:id', async (req, res) => {
   //Update an event
   router.put('/:id', async (req, res) => {
     const { id } = req.params;
-    const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements } = req.body;
+    const { name, description, venue, image, category, type, duration, Date, startDate, endDate, isTeamEvent, maxTeamSize, coordinators, rules, requirements ,whatsapp_link} = req.body;
   
     try {
       const event = await prisma.event.update({
@@ -140,6 +141,7 @@ router.delete('/:id', async (req, res) => {
           Date,
           startDate,
           endDate,
+          whatsapp_link,
           isTeamEvent,
           maxTeamSize,
   

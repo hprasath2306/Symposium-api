@@ -35,6 +35,7 @@ model Event {
   endDate       DateTime
   isTeamEvent   Boolean
   maxTeamSize   Int?
+  whatsapp_link String?
   registrations Registration[]
   teams         Team[]
   rules         EventRule[]
