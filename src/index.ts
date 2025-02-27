@@ -6,6 +6,7 @@ import studentRoutes from './routes/students';
 import momentRoutes from './routes/moment';
 import eventRoutes from './routes/events';
 import registerRoutes from './routes/registration';
+import infoRoutes from './routes/info';
 
 const app = express();
 app.use(urlencoded({ extended: false }));
@@ -24,6 +25,7 @@ app.get("/api/users", async (req, res) => {
 app.use('/api/students', studentRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registerRoutes);
+app.use('/api/info', infoRoutes);
 app.use('/api', momentRoutes)
 
 

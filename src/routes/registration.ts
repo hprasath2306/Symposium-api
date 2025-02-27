@@ -119,7 +119,10 @@ router.post('/team', async (req, res) => {
     }
 
     // Check if any team member is already registered in another event on the same day
-    const eventDate = event?.startDate;
+    // const eventDate = event?.startDate;
+    const startDate = event?.startDate;
+    const endDate = event?.endDate;
+
     for (const studentId of memberIds) {
       // Check for time conflict
       //iterate the teamMembers Model and check if the studentId is already registered for an event on the same day
@@ -129,11 +132,12 @@ router.post('/team', async (req, res) => {
           studentId,
           team: {
             event: {
+              // check conflict with start date and end date
               startDate: {
-                lte: eventDate,
+                lte: endDate,
               },
               endDate: {
-                gte: eventDate,
+                gte: startDate,
               },
             },
         },
