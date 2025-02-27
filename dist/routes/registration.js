@@ -22,6 +22,27 @@ async function hasTimeConflict(studentId, eventId) {
     });
     return !!conflictingRegistration;
 }
+async function hasTeamConflict(studentId, eventId) {
+    const event = await prisma.event.findUnique({ where: { id: eventId } });
+    if (!event)
+        return false;
+    const conflictingRegistration = await prisma.registration.findFirst({
+        where: {
+            studentId,
+            team: {
+                event: {
+                    startDate: {
+                        lte: event.endDate,
+                    },
+                    endDate: {
+                        gte: event.startDate,
+                    },
+                },
+            },
+        },
+    });
+    return !!conflictingRegistration;
+}
 // Register a student for an  single event
 router.post('/single', async (req, res) => {
     const { studentId, eventId } = req.body;
@@ -41,6 +62,10 @@ router.post('/single', async (req, res) => {
             res.status(400).json({ error: 'Time conflict with another event' });
             return;
         }
+        if (await hasTeamConflict(studentId, eventId)) {
+            res.status(400).json({ error: 'Time conflict with another event' });
+            return;
+        }
         const registration = await prisma.registration.create({
             data: { studentId, eventId },
         });
@@ -57,7 +82,15 @@ router.get('/', async (req, res) => {
             include: {
                 event: true,
                 student: true,
-                team: true,
+                team: {
+                    include: {
+                        members: {
+                            include: {
+                                student: true,
+                            },
+                        },
+                    }
+                },
             },
         });
         res.json(registrations);
@@ -94,23 +127,8 @@ router.post('/team', async (req, res) => {
         for (const studentId of memberIds) {
             // Check for time conflict
             //iterate the teamMembers Model and check if the studentId is already registered for an event on the same day
-            console.log(studentId);
-            const existingRegistration = await prisma.teamMember.findFirst({
-                where: {
-                    studentId,
-                    team: {
-                        event: {
-                            // check conflict with start date and end date
-                            startDate: {
-                                lte: endDate,
-                            },
-                            endDate: {
-                                gte: startDate,
-                            },
-                        },
-                    },
-                },
-            });
+            // console.log(studentId);
+            const existingRegistration = await hasTeamConflict(studentId, eventId) || await hasTimeConflict(studentId, eventId);
             if (existingRegistration) {
                 //  find the name os student id
                 const student = await prisma.student.findUnique({

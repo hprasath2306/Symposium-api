@@ -2,20 +2,6 @@ import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
 const router = Router();
 const prisma = new PrismaClient();
-// model Info{
-//   id        String   @id @default(uuid())
-//   name      String
-//   year      String
-//   whatsapp_link String
-// }
-// model TeamCorrdinator{
-//   id        String   @id @default(uuid())
-//   name      String
-//   phone     String?
-//   role      String
-//   imageUrl  String
-// }
-//create info
 router.post('/', async (req, res) => {
     const { name, year, whatsapp_link } = req.body;
     try {

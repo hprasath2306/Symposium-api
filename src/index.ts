@@ -7,6 +7,7 @@ import momentRoutes from './routes/moment';
 import eventRoutes from './routes/events';
 import registerRoutes from './routes/registration';
 import infoRoutes from './routes/info';
+import coordinateRoutes from './routes/coordinator';
 
 const app = express();
 app.use(urlencoded({ extended: false }));
@@ -26,6 +27,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registerRoutes);
 app.use('/api/info', infoRoutes);
+app.use('/api/coordinators', coordinateRoutes);
 app.use('/api', momentRoutes)
 
 

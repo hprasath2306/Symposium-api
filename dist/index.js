@@ -6,6 +6,7 @@ import momentRoutes from './routes/moment.js';
 import eventRoutes from './routes/events.js';
 import registerRoutes from './routes/registration.js';
 import infoRoutes from './routes/info.js';
+import coordinateRoutes from './routes/coordinator.js';
 const app = express();
 app.use(urlencoded({ extended: false }));
 app.use(express.json());
@@ -21,7 +22,8 @@ app.use('/api/students', studentRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registerRoutes);
 app.use('/api/info', infoRoutes);
-app.use('/api', momentRoutes);
+app.use('/api/coordinators', coordinateRoutes);
+.jsapp.use('/api', momentRoutes);
 const port = process.env.PORT || 6000;
 // if (process.env.NODE_ENV === "dev") {
 app.listen(port, () => {

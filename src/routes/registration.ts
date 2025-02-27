@@ -109,7 +109,15 @@ router.get('/', async (req, res) => {
       include: {
         event: true,
         student: true,
-        team: true,
+        team: {
+          include: {
+            members: {
+              include: {
+                student: true,
+              },
+            },
+          }
+        },
       },
     });
     res.json(registrations);
